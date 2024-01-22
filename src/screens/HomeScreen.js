@@ -1,35 +1,56 @@
 import { useEffect } from "react";
-import { Text, View, Button } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import { FeedScreen } from "./FeedScreen";
+import { MessageScreen } from "./MessageScreen";
 
-export const HomeScreen = ({ navigation, route }) => {
-  useEffect(() => {
-    if (route.params?.post) {
-      // Post updated, do something with `route.params.post`
-      // For example, send the post to the server
-    }
-  }, [route.params?.post]);
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Home Screen</Text>
-      {/* <Button
-        title="Go to Details"
-        onPress={() =>
-          navigation.navigate("Details", {
-            itemId: 100,
-            otraCosa: "otra cosa",
-          })
-        }
-      /> */}
-      {/* <Button
-        title="Create post"
-        onPress={() => navigation.navigate("CreatePost")}
-      />
-      <Text style={{ margin: 10 }}>Post: {route.params?.post}</Text> */}
+const tabIcon = (route, focused, color, size) => {
+	const routes = {
+		Feed: {
+			name: "Feed",
+			iconName: "home",
+			iconNameOutline: "home-outline",
+		},
+		Messages: {
+			name: "Messages",
+			iconName: "chatbox-ellipses",
+			iconNameOutline: "chatbox-ellipses-outline",
+		},
+	};
 
-      <Button
-        title="Go to Profile"
-        onPress={() => navigation.navigate("Profile", { name: "Jane" })}
-      />
-    </View>
-  );
+	return (
+		<Ionicons
+			name={
+				focused
+					? routes[route.name]["iconName"]
+					: routes[route.name]["iconNameOutline"]
+			}
+			size={size}
+			color={color}
+		/>
+	);
+};
+
+const Tab = createBottomTabNavigator();
+
+export const HomeScreen = ({ route }) => {
+	useEffect(() => {
+		if (route.params?.post) {
+			// Post updated, do something with `route.params.post`
+			// For example, send the post to the server
+		}
+	}, [route.params?.post]);
+	return (
+		<Tab.Navigator
+			screenOptions={({ route }) => ({
+				tabBarIcon: ({ focused, color, size }) =>
+					tabIcon(route, focused, color, size),
+				tabBarActiveTintColor: "tomato",
+				tabBarInactiveTintColor: "gray",
+			})}
+		>
+			<Tab.Screen name="Feed" component={FeedScreen} />
+			<Tab.Screen name="Messages" component={MessageScreen} />
+		</Tab.Navigator>
+	);
 };

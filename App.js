@@ -10,47 +10,50 @@ import { ProfileScreen } from "./src/screens/ProfileScreen";
 const Stack = createNativeStackNavigator();
 
 const LogoTitle = () => {
-  return (
-    <Image
-      style={{ width: 50, height: 50 }}
-      source={require("./assets/adaptive-icon.png")}
-    />
-  );
+	return (
+		<Image
+			style={{ width: 50, height: 50 }}
+			source={require("./assets/adaptive-icon.png")}
+		/>
+	);
 };
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <StatusBar />
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#f4511e",
-          },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
-      >
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-        />
-        <Stack.Screen
-          name="Details"
-          component={DetailsScreen}
-          initialParams={{ itemId: 69 }}
-        />
-        <Stack.Screen name="CreatePost" component={CreatePostScreen} />
-        <Stack.Screen
-          name="Profile"
-          component={ProfileScreen}
-          options={({ route }) => ({ title: route.params.name })}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+	return (
+		<NavigationContainer>
+			<StatusBar />
+			<Stack.Navigator
+			// initialRouteName="Home"
+			// screenOptions={{
+			//   headerStyle: {
+			//     backgroundColor: "#f4511e",
+			//   },
+			//   headerTintColor: "#fff",
+			//   headerTitleStyle: {
+			//     fontWeight: "bold",
+			//   },
+			// }}
+			>
+				<Stack.Screen
+					name="Home"
+					component={HomeScreen}
+					options={{
+						headerTitle: (props) => <LogoTitle {...props} />,
+						headerShown: false,
+					}}
+				/>
+				<Stack.Screen
+					name="Details"
+					component={DetailsScreen}
+					initialParams={{ itemId: 69 }}
+				/>
+				<Stack.Screen name="CreatePost" component={CreatePostScreen} />
+				<Stack.Screen
+					name="Profile"
+					component={ProfileScreen}
+					options={({ route }) => ({ title: route.params.name })}
+				/>
+			</Stack.Navigator>
+		</NavigationContainer>
+	);
 }
